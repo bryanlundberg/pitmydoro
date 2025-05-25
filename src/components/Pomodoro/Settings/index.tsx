@@ -85,11 +85,15 @@ export const Settings = () => {
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content h='700px' backgroundColor={{ base: 'gray.50', _dark: 'dark.200' }}>
+          <Dialog.Content
+            h='700px'
+            borderRadius={'3xl'}
+            backgroundColor={{ base: 'gray.50', _dark: 'dark.200' }}
+          >
             <Dialog.Header display='flex' justifyContent='space-between'>
               <Dialog.Title>{t('title')}</Dialog.Title>
               <Dialog.CloseTrigger asChild>
-                <CloseButton size='sm' />
+                <CloseButton rounded='full' size='sm' />
               </Dialog.CloseTrigger>
             </Dialog.Header>
             <Dialog.Body>

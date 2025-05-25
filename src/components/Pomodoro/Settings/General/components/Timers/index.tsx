@@ -24,7 +24,10 @@ export const Timers = () => {
     [TireTypeEnum.INTERMEDIATE]: t('intermediate'),
     [TireTypeEnum.WET]: t('wet'),
   };
+
   const ICON_SIZE = 50;
+  const TOTAL_ICONS = 7; // 5 tires + 2 breaks
+  const backgroundSize = `${ICON_SIZE * TOTAL_ICONS}px auto`;
 
   return (
     <VStack gap={8} marginY={'20px'}>
@@ -41,7 +44,7 @@ export const Timers = () => {
               cursor={'pointer'}
               style={{
                 backgroundImage: "url('./images/tires.png')",
-                backgroundSize: `${ICON_SIZE * tires.length}px auto`,
+                backgroundSize,
                 backgroundPositionX: `-${ICON_SIZE * idx}px`,
                 width: `${ICON_SIZE}px`,
                 height: `${ICON_SIZE}px`,
@@ -72,8 +75,8 @@ export const Timers = () => {
             cursor={'pointer'}
             style={{
               backgroundImage: "url('./images/tires.png')",
-              backgroundSize: `${ICON_SIZE * tires.length}px auto`,
-              backgroundPositionX: `-${ICON_SIZE * 1}px`,
+              backgroundSize,
+              backgroundPositionX: `-${ICON_SIZE * 5}px`, // 6th icon (short break)
               width: `${ICON_SIZE}px`,
               height: `${ICON_SIZE}px`,
             }}
@@ -102,8 +105,8 @@ export const Timers = () => {
             cursor={'pointer'}
             style={{
               backgroundImage: "url('./images/tires.png')",
-              backgroundSize: `${ICON_SIZE * tires.length}px auto`,
-              backgroundPositionX: `-${ICON_SIZE * 1}px`,
+              backgroundSize,
+              backgroundPositionX: `-${ICON_SIZE * 6}px`, // 7th icon (long break)
               width: `${ICON_SIZE}px`,
               height: `${ICON_SIZE}px`,
             }}

@@ -19,6 +19,7 @@ import { useAlert } from '@/hooks/useAlert';
 import tinycolor from 'tinycolor2';
 import { useTheme } from 'next-themes';
 import { useSounds } from '@/hooks/useSounds';
+import { jua } from '@/fonts/Jua';
 
 export const Counter = () => {
   const status = useSessionStore((state) => state.status);
@@ -28,6 +29,7 @@ export const Counter = () => {
   const isEndingSoon = useSessionStore((state) => state.isEndingSoon);
   const setIsEndingSoon = useSessionStore((state) => state.setIsEndingSoon);
   const tiresSettings = useSettingsStore((state) => state.tiresSettings);
+  const enableNotifications = useSettingsStore((state) => state.enableNotifications);
   const breaksDuration = useSettingsStore((state) => state.breaksDuration);
   const extPomodoros = usePomodoroStore((state) => state.extPomodoros);
   const tasks = usePomodoroStore((state) => state.tasks);
@@ -43,12 +45,28 @@ export const Counter = () => {
   const { playSound, resumeSound, radioSound } = useSounds();
   const t = useTranslations('pomodoro');
 
-  const darkenColor = tinycolor(currentScuderia?.colors?.primary?.dark)
-    .darken(theme === 'dark' ? 15 : 0)
+  const backButtonColor =
+    theme === 'dark'
+      ? tinycolor(currentScuderia?.colors?.primary?.dark)
+      : tinycolor(currentScuderia?.colors?.background?.[status]);
+  const buttonColor =
+    theme === 'dark'
+      ? tinycolor(currentScuderia?.colors?.primary?.default)
+      : tinycolor(currentScuderia?.colors?.background?.[status]);
+
+  const counterColor =
+    theme === 'dark'
+      ? 'white'
+      : tinycolor(currentScuderia?.colors?.background?.[status]).darken(5).brighten(-30).toString();
+
+  const darkenColor = backButtonColor
+    .darken(theme === 'dark' ? 15 : 10)
+    .brighten(theme === 'dark' ? 0 : -15)
     .toString();
 
-  const darkenColorDefault = tinycolor(currentScuderia?.colors?.primary?.default)
-    .darken(theme === 'dark' ? 10 : 0)
+  const darkenColorDefault = buttonColor
+    .darken(theme === 'dark' ? 10 : 10)
+    .brighten(theme === 'dark' ? 0 : -5)
     .toString();
 
   const isDesktop = () => {
@@ -63,7 +81,7 @@ export const Counter = () => {
       radioSound();
 
       if (isDesktop()) {
-        if (Notification.permission === 'granted') {
+        if (Notification.permission === 'granted' && enableNotifications) {
           new Notification('Box, Box!', {
             body: 'Time to break',
             icon: '/f1-icon.png',
@@ -230,7 +248,12 @@ export const Counter = () => {
             date={date}
             onTick={handleTick}
             renderer={({ minutes, seconds }) => (
-              <Text fontWeight='bold' fontSize='7xl' fontFamily={'fonts.counter'}>
+              <Text
+                fontWeight='bold'
+                fontSize='7xl'
+                color={theme === 'dark' ? 'white' : counterColor}
+                className={jua.className}
+              >
                 {zeroPad(minutes)}:{zeroPad(seconds)}
               </Text>
             )}

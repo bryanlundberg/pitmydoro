@@ -1,15 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+type ConsentSettings = {
+  necessary: true;
+  analytics: boolean;
+  ads: boolean;
+};
+
 interface CookieConsentState {
-  consent: 'accepted' | 'declined' | null;
-  setConsent: (value: 'accepted' | 'declined') => void;
+  consent: ConsentSettings;
+  setConsent: (value: ConsentSettings) => void;
 }
 
 export const useCookieConsentStore = create(
   persist<CookieConsentState>(
     (set) => ({
-      consent: null,
+      consent: {
+        necessary: true,
+        analytics: false,
+        ads: false,
+      },
       setConsent: (value) => set({ consent: value }),
     }),
     {

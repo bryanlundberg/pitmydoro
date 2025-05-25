@@ -22,11 +22,11 @@ export const useAlert = () => {
     toast.success(message, {
       style: {
         padding: '16px',
-        color: theme === 'dark' ? '#39ba4b' : '#007111',
+        color: theme === 'dark' ? '#39ba4b' : '#49c85d',
         background: theme === 'dark' ? darkContrast : light,
       },
       iconTheme: {
-        primary: theme === 'dark' ? '#39ba4b' : '#007111',
+        primary: theme === 'dark' ? '#39ba4b' : '#49c85d',
         secondary: '#FFFAEE',
       },
     });

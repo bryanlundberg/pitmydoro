@@ -9,7 +9,9 @@ const tires = [
   TireTypeEnum.INTERMEDIATE,
   TireTypeEnum.WET,
 ];
-const ICON_SIZE = 50;
+
+const TOTAL_ICONS = 7;
+const ICON_SIZE = 55;
 const VISIBLE_TIRES = 5;
 
 interface Props {
@@ -57,7 +59,7 @@ export const TimerSelector = ({ onSelect, value }: Props) => {
             onClick={() => handleClick(index)}
             style={{
               backgroundImage: "url('./images/tires.png')",
-              backgroundSize: `${ICON_SIZE * tires.length}px auto`,
+              backgroundSize: `${ICON_SIZE * TOTAL_ICONS}px auto`,
               backgroundPositionX: `-${ICON_SIZE * index}px`,
               width: `${ICON_SIZE}px`,
               height: `${ICON_SIZE}px`,

@@ -58,6 +58,7 @@ export const BottomBanner = () => {
               size='sm'
               onClick={() => hideBanner()}
               position={'absolute'}
+              rounded='full'
               top={5}
               right={5}
             />

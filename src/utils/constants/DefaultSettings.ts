@@ -5,10 +5,10 @@ import { defaultLocale } from '@/i18n/config';
 
 export const DefaultSettings: ISettings = {
   locale: defaultLocale,
-  breaksInterval: 2,
+  breaksInterval: 4,
   isLongBreakPerTask: false,
   breaksDuration: {
-    [SessionStatusEnum.SHORT_BREAK]: 15,
+    [SessionStatusEnum.SHORT_BREAK]: 5,
     [SessionStatusEnum.LONG_BREAK]: 15,
   },
   autoStartSession: true,

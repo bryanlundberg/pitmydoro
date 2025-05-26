@@ -106,7 +106,7 @@ export const TaskCard = ({
   };
 
   const handleOnTaskDelete = async () => {
-    if (await confirmAlert('Delete?', 'Are you sure you want to delete this task?')) {
+    if (await confirmAlert(t('deleteTaskConfirmTitle'), t('deleteTaskConfirmMessage'))) {
       onTaskDelete?.(task.id);
       toastSuccess(t('successDeleteTask'));
     }

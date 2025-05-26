@@ -87,6 +87,7 @@ export default function TermsPage() {
           </Text>
           <Text>{t('sections.processing.noData')}</Text>
           <Text>{t('sections.processing.perks')}</Text>
+          <Text>{t('sections.processing.process')}</Text>
         </Flex>
 
         <Flex gap={2} alignItems='flex-start' flexDirection='column'>

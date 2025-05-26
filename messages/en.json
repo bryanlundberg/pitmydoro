@@ -12,6 +12,8 @@
     "sessionLabel": "Session",
     "shortBreakLabel": "Short Break",
     "longBreakLabel": "Long Break",
+    "boxTitle": "Box, Box!",
+    "boxDescription": "Time to break",
     "tasks": {
       "title": "Plan your strategy",
       "addTask": "Add Task",
@@ -25,7 +27,9 @@
       "successCheckTask": "Task marked as completed",
       "successUncheckTask": "Task marked as uncompleted",
       "successUpdateTask": "Task updated successfully",
-      "successDeleteTask": "Task deleted successfully"
+      "successDeleteTask": "Task deleted successfully",
+      "deleteTaskConfirmTitle": "Are you sure you want to delete this task?",
+      "deleteTaskConfirmMessage": "This action cannot be undone."
     }
   },
   "settings": {
@@ -303,7 +307,8 @@
         "title": "3. SUPPORT PROCESSING AND AUTOMATION",
         "external": "All transactions are processed externally through <bmc>Buy Me a Coffee</bmc>, a platform for creator support.",
         "noData": "We do not collect or manage payment data.",
-        "perks": "Certain contributions may trigger automations (via Zapier) that grant perks or improvements in the app as a token of appreciation."
+        "perks": "Certain contributions may trigger automations (via Zapier) that grant perks or improvements in the app as a token of appreciation.",
+        "process": "Important: To receive benefits in return for your support, please be sure to use the same email address in the app and on the support platform."
       },
       "commerce": {
         "title": "4. NO DIRECT COMMERCE",

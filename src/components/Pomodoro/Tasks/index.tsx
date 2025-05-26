@@ -28,6 +28,10 @@ export const Tasks = () => {
     if (!editingTask) {
       setCurrentTask(task);
     } else {
+      if (tasks?.length && tasks.some((t) => !t.title)) {
+        return;
+      }
+
       setEditingTask(null);
       setCurrentTask(task);
     }

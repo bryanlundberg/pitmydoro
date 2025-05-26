@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'pitmydoro.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.buymeacoffee.com',
+      },
     ],
   },
 };

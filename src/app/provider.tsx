@@ -107,7 +107,7 @@ export default function Provider(props: { children: React.ReactNode }) {
 
   return (
     <ChakraProvider value={system}>
-      <ThemeProvider attribute='class' disableTransitionOnChange>
+      <ThemeProvider defaultTheme={'light'} attribute='class' disableTransitionOnChange>
         {props.children}
       </ThemeProvider>
     </ChakraProvider>

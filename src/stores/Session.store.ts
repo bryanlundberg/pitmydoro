@@ -9,6 +9,7 @@ interface SessionStore {
   isStopped: boolean;
   selectedTire: TireTypeEnum;
   isEndingSoon: boolean;
+  estTimeFinish: string;
 }
 
 interface SessionActions {
@@ -17,6 +18,7 @@ interface SessionActions {
   setIsStopped: (isStopped: boolean) => void;
   setSelectedTire: (tire: TireTypeEnum) => void;
   setIsEndingSoon: (val: boolean) => void;
+  setEstTimeFinish: (estTimeFinish: string) => void;
 }
 
 const useSessionStore = create<SessionStore & SessionActions>((set) => ({
@@ -25,12 +27,14 @@ const useSessionStore = create<SessionStore & SessionActions>((set) => ({
   flag: null,
   isStopped: false,
   isEndingSoon: false,
+  estTimeFinish: '',
 
   setStatus: (status) => set(() => ({ status })),
   setFlag: (flag) => set(() => ({ flag })),
   setIsStopped: (isStopped) => set(() => ({ isStopped })),
   setSelectedTire: (selectedTire) => set(() => ({ selectedTire })),
   setIsEndingSoon: (val: boolean) => set({ isEndingSoon: val }),
+  setEstTimeFinish: (time: string) => set({ estTimeFinish: time }),
 }));
 
 export default useSessionStore;

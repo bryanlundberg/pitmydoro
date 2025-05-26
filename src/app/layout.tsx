@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import { BottomBanner } from '@/components/BottomBanner';
 import { Metadata } from 'next';
 import AppCheckWrapper from '@/app/AppCheckWrapper';
+import Head from 'next/head';
 
 export const metadata: Metadata = {
   title: 'Pit My Doro',
@@ -40,6 +41,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={'en'} suppressHydrationWarning>
+      <Head>
+        <meta property='og:title' content='PitMyDoro' />
+        <meta property='og:description' content='An online F1 style Pomodoro timer.' />
+        <meta property='og:url' content='https://pitmydoro.com/' />
+        <meta property='og:type' content='website' />
+        <meta property='og:image' content='https://pitmydoro.com/images/cover.png' />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:title' content='PitMyDoro' />
+        <meta name='twitter:description' content='An online F1 style Pomodoro timer.' />
+        <meta name='twitter:image' content='https://pitmydoro.com/images/cover.png' />
+      </Head>
+
       <body>
         <NextIntlClientProvider>
           <Provider>

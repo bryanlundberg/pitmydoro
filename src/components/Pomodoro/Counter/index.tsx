@@ -26,6 +26,8 @@ export const Counter = () => {
   const setStopped = useSessionStore((state) => state.setIsStopped);
   const setFlag = useSessionStore((state) => state.setFlag);
   const selectedTire = useSessionStore((state) => state.selectedTire);
+  const estTimeFinish = useSessionStore((state) => state.estTimeFinish);
+  const setEstTimeFinish = useSessionStore((state) => state.setEstTimeFinish);
   const isEndingSoon = useSessionStore((state) => state.isEndingSoon);
   const setIsEndingSoon = useSessionStore((state) => state.setIsEndingSoon);
   const tiresSettings = useSettingsStore((state) => state.tiresSettings);
@@ -36,7 +38,7 @@ export const Counter = () => {
   const resetSession = usePomodoroStore((state) => state.resetSession);
   const countdownRef = useRef<CountdownApi | null>(null);
   const currentScuderia = usePomodoroStore((state) => state.currentScuderia);
-  const { handleCompleteInterval, allPomodoros, completedPomodoros, estTimeFinish } = usePomodoro();
+  const { handleCompleteInterval, allPomodoros, completedPomodoros } = usePomodoro();
   const { theme } = useTheme();
   const [date, setDate] = useState(Date.now() + 1000000);
   const [isActive, setIsActive] = useState(false);
@@ -76,14 +78,19 @@ export const Counter = () => {
   };
 
   const handleTick = ({ total }: { total: number }) => {
+    const now = Date.now();
+
+    const isRunning = countdownRef.current?.isStarted() && !countdownRef.current?.isPaused();
+    if (!isRunning) return;
+
     if (total <= 4000 && !isEndingSoon) {
       setIsEndingSoon(true);
       radioSound();
 
       if (isDesktop()) {
         if (Notification.permission === 'granted' && enableNotifications) {
-          new Notification('Box, Box!', {
-            body: 'Time to break',
+          new Notification(t('boxTitle'), {
+            body: t('boxDescription'),
             icon: '/f1-icon.png',
           });
         }
@@ -97,6 +104,19 @@ export const Counter = () => {
     if (total > 4000 && isEndingSoon) {
       setIsEndingSoon(false);
     }
+
+    const allPomodoros = tasks.flatMap((t) => t.pomodoros);
+    const incompletePomodoros = allPomodoros.filter((p) => !p.completedAt);
+
+    const tireDuration = tiresSettings[selectedTire]?.duration ?? 25;
+    const msPerPomodoro = tireDuration * 60 * 1000;
+
+    const remainingFuture = (incompletePomodoros.length - 1) * msPerPomodoro;
+
+    const totalRemaining = Math.max(total, 0) + Math.max(remainingFuture, 0);
+    const newEst = moment(now + totalRemaining).format('HH:mm');
+
+    setEstTimeFinish(newEst);
   };
 
   const handleIntervalComplete = useCallback(() => {

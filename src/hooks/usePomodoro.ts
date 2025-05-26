@@ -10,6 +10,7 @@ import { IPomodoro } from '@/interfaces/Pomodoro.interface';
 
 export const usePomodoro = () => {
   const [editingTask, setEditingTask] = useState<string | null>(null);
+  const [now, setNow] = useState(moment());
   const tasks = usePomodoroStore((state) => state.tasks);
   const tiresSettings = useSettingsStore((state) => state.tiresSettings);
   const breaksInterval = useSettingsStore((state) => state.breaksInterval);
@@ -45,13 +46,13 @@ export const usePomodoro = () => {
   );
 
   const estTimeFinish = useMemo<string>(() => {
-    if (!tasks.length) return moment().format('HH:mm');
+    if (!tasks.length) return now.format('HH:mm');
 
     const tasksPomodoros = tasks.flatMap((task: ITask) => task.pomodoros);
     const incompletePomodoros = tasksPomodoros.filter(
       (pomodoro: IPomodoro) => !pomodoro.completedAt
     );
-    const timeNow = moment().valueOf();
+    const timeNow = now.valueOf();
 
     const totalDuration = incompletePomodoros.reduce((acc: number) => {
       const duration = tiresSettings[selectedTire]?.duration;
@@ -59,7 +60,7 @@ export const usePomodoro = () => {
     }, 0);
 
     return moment(timeNow + totalDuration).format('HH:mm');
-  }, [tasks, tiresSettings, selectedTire]);
+  }, [tasks, tiresSettings, selectedTire, now]);
 
   const handleCompleteInterval = (): void => {
     switch (status) {
@@ -284,6 +285,14 @@ export const usePomodoro = () => {
       setCurrentTask(incompleteTasks[0]);
     }
   }, [tasks, currentTask, autoStartNextTask, setCurrentTask]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(moment());
+    }, 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!tasks?.length) setCurrentTask(null);

@@ -30,6 +30,8 @@ export const Footer = () => {
           target='_blank'
         >
           <Image
+            width={200}
+            height={50}
             src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png'
             alt='Buy Me A Coffee'
           />

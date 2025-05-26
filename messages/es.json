@@ -12,6 +12,8 @@
     "sessionLabel": "Sesión",
     "shortBreakLabel": "Descanso corto",
     "longBreakLabel": "Descanso largo",
+    "boxTitle": "Box, Box!",
+    "boxDescription": "Hora de tomar un descanso.",
     "tasks": {
       "title": "Planifica tu estrategia",
       "addTask": "Agregar tarea",
@@ -25,7 +27,9 @@
       "successCheckTask": "Tarea marcada como completada",
       "successUncheckTask": "Tarea marcada como incompleta",
       "successUpdateTask": "Tarea actualizada con éxito",
-      "successDeleteTask": "Tarea eliminada con éxito"
+      "successDeleteTask": "Tarea eliminada con éxito",
+      "deleteTaskConfirmTitle": "¿Estás seguro de que deseas eliminar esta tarea?",
+      "deleteTaskConfirmMessage": "Esta acción no se puede deshacer."
     }
   },
   "settings": {
@@ -304,7 +308,8 @@
         "title": "3. PROCESAMIENTO DE APOYOS Y AUTOMATIZACIÓN",
         "external": "Todas las transacciones se procesan de forma externa a través de <bmc>Buy Me a Coffee</bmc>, una plataforma de apoyo a creadores.",
         "noData": "Los datos de pago no son recopilados ni gestionados por nosotros.",
-        "perks": "Ciertos apoyos pueden activar automatizaciones (vía Zapier) que otorgan mejoras y/o beneficios dentro de la app como forma de agradecimiento."
+        "perks": "Ciertos apoyos pueden activar automatizaciones (vía Zapier) que otorgan mejoras y/o beneficios dentro de la app como forma de agradecimiento.",
+        "process": "Importante: para poder obtener beneficios a cambio de tu apoyo, procura utilizar el mismo correo electrónico en la app y en la plataforma de apoyo."
       },
       "commerce": {
         "title": "4. NO EXISTE COMERCIO DIRECTO",

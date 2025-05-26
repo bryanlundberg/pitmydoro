@@ -1,4 +1,4 @@
-import { Box, Center, VStack, Image } from '@chakra-ui/react';
+import { Box, Center, VStack, Image, Loader } from '@chakra-ui/react';
 import { TimerSelector } from '@/components/Pomodoro/TimerSelector';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Counter } from '@/components/Pomodoro/Counter';
@@ -10,6 +10,7 @@ import { Tasks } from '@/components/Pomodoro/Tasks';
 import { SpriteAnimation } from '@/components/SpriteAnimation';
 import { FlagSwitcher } from '@/components/Pomodoro/components/FlagSwitcher';
 import { useTranslations } from 'use-intl';
+import useTeamsStore from '@/stores/Teams.store';
 
 export const Pomodoro = () => {
   const sessionStatus = useSessionStore((state) => state.status);
@@ -18,6 +19,7 @@ export const Pomodoro = () => {
   const setStatus = useSessionStore((state) => state.setStatus);
   const selectedTire = useSessionStore((state) => state.selectedTire);
   const setSelectedTire = useSessionStore((state) => state.setSelectedTire);
+  const teams = useTeamsStore((state) => state.teams);
   const t = useTranslations('pomodoro');
 
   const darkenColor = tinycolor(currentScuderia?.colors?.background?.[sessionStatus])
@@ -76,16 +78,20 @@ export const Pomodoro = () => {
           transform='translate(-50%, -50%)'
           display='inline-block'
         >
-          <Image
-            src={currentScuderia?.logoURL}
-            alt={'absolute'}
-            w='auto'
-            h='auto'
-            style={{
-              WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 100%)',
-              maskImage: 'linear-gradient(to top, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 100%)',
-            }}
-          />
+          {!teams?.length || !currentScuderia?.logoURL ? (
+            <Loader opacity={0.6} width={40} height={40} />
+          ) : (
+            <Image
+              src={currentScuderia?.logoURL}
+              alt={'absolute'}
+              w='auto'
+              h='auto'
+              style={{
+                WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 100%)',
+                maskImage: 'linear-gradient(to top, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 100%)',
+              }}
+            />
+          )}
         </Box>
 
         {currentScuderia && (

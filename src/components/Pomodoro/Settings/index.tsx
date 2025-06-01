@@ -107,7 +107,7 @@ export const Settings = () => {
           onMouseEnter={handleMouseEnter}
         >
           <Tooltip
-            content='💡Personaliza tus tiempos y escoge tu escudería favorita para cambiar el tema de la aplicación.'
+            content={t('initialHint')}
             open={showTooltip}
             contentProps={{ css: { '--tooltip-bg': 'tomato' }, _dark: { color: 'white' } }}
             positioning={{ placement: 'right-start' }}

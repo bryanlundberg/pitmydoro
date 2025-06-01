@@ -29,7 +29,8 @@
       "successUpdateTask": "Task updated successfully",
       "successDeleteTask": "Task deleted successfully",
       "deleteTaskConfirmTitle": "Are you sure you want to delete this task?",
-      "deleteTaskConfirmMessage": "This action cannot be undone."
+      "deleteTaskConfirmMessage": "This action cannot be undone.",
+      "tasksHint": "\uD83D\uDCA1 Start adding tasks to organize your work session..."
     }
   },
   "settings": {
@@ -40,6 +41,7 @@
     "general": "General",
     "scuderia": "Scuderia",
     "help": "Help & Support",
+    "initialHint": "\uD83D\uDCA1 Customize your times and choose your favorite team to change the app theme.",
     "sections": {
       "timers": {
         "title": "Timers",

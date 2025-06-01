@@ -89,7 +89,7 @@ export const Tasks = () => {
       />
 
       <Tooltip
-        content='💡Comienza a añadir tareas para organizar tu sesión de trabajo...'
+        content={t('tasksHint')}
         open={showTooltip}
         contentProps={{ css: { '--tooltip-bg': 'tomato' }, _dark: { color: 'white' } }}
         positioning={{ placement: 'left-start' }}

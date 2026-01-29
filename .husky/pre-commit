@@ -20,6 +20,14 @@ npm run lint ||
         false;
 )
 
+# Run Tests
+npm run test ||
+(
+        echo '😤🏀👋😤 Get that weak s**t out of here! 😤🏀👋😤
+                Tests Failed.'
+        false;
+)
+
 git add .
 
 # If everything passes... Now we can commit

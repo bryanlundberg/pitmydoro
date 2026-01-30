@@ -8,16 +8,26 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    env:
-      NEXT_PLAYWRIGHT_TEST_BASE_URL: https://pitmydoro.vercel.app/
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - name: Install dependencies
+        run: npm install
+      - name: Build application
+        run: npm run build
+      - name: Start server
+        run: npm run dev
+        env:
+          PORT: 3000
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
+        env:
+          NEXT_PLAYWRIGHT_TEST_BASE_URL: http://localhost:3000
         run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

@@ -36,7 +36,9 @@ export const usePomodoro = () => {
 
   const allPomodoros = useMemo<IPomodoro[]>(() => {
     if (!tasks.length) return extPomodoros;
-    const tasksPomodoros = tasks.flatMap((task) => task.pomodoros);
+    const tasksPomodoros = tasks
+      .filter((task) => !task.completed)
+      .flatMap((task) => task.pomodoros);
     return [...tasksPomodoros, ...extPomodoros];
   }, [tasks, extPomodoros]);
 

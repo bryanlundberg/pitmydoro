@@ -51,6 +51,7 @@ export const Counter = () => {
     theme === 'dark'
       ? tinycolor(currentScuderia?.colors?.primary?.dark)
       : tinycolor(currentScuderia?.colors?.background?.[status]);
+
   const buttonColor =
     theme === 'dark'
       ? tinycolor(currentScuderia?.colors?.primary?.default)

@@ -8,15 +8,14 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '@/components/ui/me
 import { Box, Card, Input, Flex, IconButton, Text, NumberInput, Textarea } from '@chakra-ui/react';
 import { useTranslations } from 'use-intl';
 import { useAlert } from '@/hooks/useAlert';
+import { usePomodoro } from '@/hooks/usePomodoro';
 
 interface Props {
   task: ITask;
-  onTaskEdit: (taskId: string | null) => void;
   draggableIcon?: React.ReactNode;
   isEditing?: boolean;
   disabledEditing?: boolean;
   isActive?: boolean;
-  onTaskCheck?: (taskId: string, check: boolean) => void;
   onTaskSubmit?: (
     taskId: string,
     data: {
@@ -27,16 +26,12 @@ interface Props {
     }
   ) => void;
   onTaskClick?: (task: ITask) => void;
-  onTaskDelete?: (taskId: string) => void;
 }
 
 export const TaskCard = ({
   task,
   draggableIcon,
   onTaskClick,
-  onTaskDelete,
-  onTaskEdit,
-  onTaskCheck,
   onTaskSubmit,
   disabledEditing = false,
   isEditing = false,
@@ -52,17 +47,18 @@ export const TaskCard = ({
   const [menuOpen, setMenuOpen] = React.useState(false);
   const { confirmAlert, toastSuccess } = useAlert();
   const t = useTranslations('pomodoro.tasks');
+  const { handleDeleteTask, handleCheckTask, setEditingTask } = usePomodoro();
 
   const handleOnTaskSubmit = (save?: boolean) => {
     if (!save) {
-      onTaskEdit(null);
+      setEditingTask(null);
       setTaskTitle(task.title);
       setTaskDescription(task.description);
       setTaskPomodoros(task.pomodoros.length);
       setTaskCompletedPomodoros(task.pomodoros.filter((p) => p.completedAt).length);
 
       if (!taskTitle) {
-        onTaskDelete?.(task.id);
+        handleDeleteTask(task.id);
       }
 
       return;
@@ -75,7 +71,7 @@ export const TaskCard = ({
       taskCompletedPomodoros,
     });
 
-    onTaskEdit(null);
+    setEditingTask(null);
     toastSuccess(t('successUpdateTask'));
   };
 
@@ -85,29 +81,29 @@ export const TaskCard = ({
     setMenuOpen((prev) => !prev);
   };
 
-  const handleEditTask = (taskId: string) => {
+  const handleOnEditTask = (taskId: string) => {
     setMenuOpen(false);
-    onTaskEdit(taskId);
+    setEditingTask(taskId);
   };
 
   const handleMenuClose = () => {
     setMenuOpen(false);
   };
 
-  const handleCheckTask = async (e: React.MouseEvent) => {
+  const handleOnCheckTask = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setMenuOpen(false);
     setTimeout(() => {
-      onTaskCheck?.(task.id, !task.completed);
+      handleCheckTask(task.id, !task.completed);
 
       if (!task.completed) toastSuccess(t('successCheckTask'));
       else toastSuccess(t('successUncheckTask'));
-    }, 10);
+    }, 100);
   };
 
   const handleOnTaskDelete = async () => {
     if (await confirmAlert(t('deleteTaskConfirmTitle'), t('deleteTaskConfirmMessage'))) {
-      onTaskDelete?.(task.id);
+      handleDeleteTask(task.id);
       toastSuccess(t('successDeleteTask'));
     }
   };
@@ -236,7 +232,7 @@ export const TaskCard = ({
                       onClick={(e) => {
                         e.stopPropagation();
                         if (disabledEditing) return;
-                        handleEditTask(task.id);
+                        handleOnEditTask(task.id);
                       }}
                       value='edit'
                       cursor='pointer'
@@ -244,7 +240,11 @@ export const TaskCard = ({
                       <MdModeEdit />
                       {t('editTask')}
                     </MenuItem>
-                    <MenuItem onClick={(e) => handleCheckTask(e)} value='complete' cursor='pointer'>
+                    <MenuItem
+                      onClick={(e) => handleOnCheckTask(e)}
+                      value='complete'
+                      cursor='pointer'
+                    >
                       {task.completed ? <TiTimes /> : <MdOutlineCheck />}
                       {task.completed ? t('markAsUncompleted') : t('markAsCompleted')}
                     </MenuItem>

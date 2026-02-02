@@ -1,4 +1,4 @@
-import { ITeam } from '@/interfaces/Teams.interface';
+import { Team } from '@/interfaces/Teams.interface';
 import usePomodoroStore from '@/stores/Pomodoro.store';
 import useSettingsStore from '@/stores/Settings.store';
 import { TireTypeEnum } from '@/enums/TireType.enum';
@@ -71,9 +71,9 @@ export const useSettings = () => {
     });
   };
 
-  const changeScuderia = (scuderia: ITeam | string) => {
+  const changeScuderia = (scuderia: Team | string) => {
     if (typeof scuderia === 'string') {
-      setCurrentScuderia(SCUDERIAS.find((team: ITeam) => team.id == scuderia) as ITeam);
+      setCurrentScuderia(SCUDERIAS.find((team: Team) => team.id == scuderia) as Team);
     } else {
       setCurrentScuderia(scuderia);
     }

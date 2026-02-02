@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "npx playwright test",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
     "prepare": "husky",
     "postbuild": "next-sitemap"
   },

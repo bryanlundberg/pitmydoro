@@ -1,39 +1,66 @@
-import { Box, Flex, Image, RadioCard, Skeleton, Text, VStack } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Flex,
+  HStack,
+  Image,
+  RadioCard,
+  Skeleton,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import NextImage from 'next/image';
 import { Team } from '@/interfaces/Teams.interface';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSettings } from '@/hooks/useSettings';
 import { ColorPreview } from '@/components/ColorPreview';
 import { useTranslations } from 'use-intl';
 import { SCUDERIAS } from '@/constants/Scuderias';
 import usePomodoroStore from '@/stores/Pomodoro.store';
+import _ from 'lodash';
 
 export const Scuderia = () => {
   const { changeScuderia } = useSettings();
   const currentScuderia = usePomodoroStore((state) => state.currentScuderia);
   const t = useTranslations('settings');
+  const [selectedYear, setSelectedYear] = useState(currentScuderia?.year || '2025');
   const [selectedScuderia, setSelectedScuderia] = useState<string | null>(
     currentScuderia?.id || null
   );
 
-  const handleChange = (value: any) => {
-    if (value === selectedScuderia) return;
+  const AVAILABLE_YEARS = _.uniq(_.map(SCUDERIAS, 'year'));
+
+  const filteredTeams = useMemo(
+    () => SCUDERIAS.filter((team) => team.year === selectedYear),
+    [selectedYear]
+  );
+
+  const handleScuderiaChange = (value: string) => {
     setSelectedScuderia(value);
     changeScuderia(value);
   };
-
-  useEffect(() => {
-    if (!selectedScuderia) {
-      setSelectedScuderia(SCUDERIAS[0]?.id);
-      changeScuderia(SCUDERIAS[0]?.id);
-    }
-  }, [selectedScuderia, changeScuderia]);
 
   return (
     <Box>
       <Text fontWeight={'bold'} fontSize={'lg'}>
         {t('scuderia')}
       </Text>
+
+      <HStack>
+        {AVAILABLE_YEARS.map((year: string) => (
+          <Badge
+            key={year}
+            variant={selectedYear === year ? 'solid' : 'outline'}
+            size={'lg'}
+            cursor={'pointer'}
+            onClick={() => setSelectedYear(year)}
+            colorPalette='blue'
+            borderRadius={'full'}
+          >
+            {year}
+          </Badge>
+        ))}
+      </HStack>
 
       <VStack alignItems='start' marginY={'20px'}>
         <RadioCard.Root
@@ -42,14 +69,14 @@ export const Scuderia = () => {
           justify='center'
           maxW='lg'
           value={selectedScuderia}
-          onValueChange={(e) => handleChange(e.value)}
+          onValueChange={(e) => handleScuderiaChange(e.value)}
           defaultValue={SCUDERIAS[0]?.id}
         >
           <VStack align='stretch'>
-            {SCUDERIAS.map((team: Team, idx: number) => (
-              <Skeleton key={idx} height='150px' loading={!team}>
+            {filteredTeams.map((team: Team) => (
+              <Skeleton key={team.id} height='150px' loading={!team}>
                 <RadioCard.Item
-                  key={idx}
+                  key={team.id}
                   value={team.id}
                   borderRadius={'xl'}
                   borderWidth={'3px'}

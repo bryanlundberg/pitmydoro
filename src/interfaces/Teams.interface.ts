@@ -28,5 +28,6 @@ export interface Team {
   logoURL: string;
   spriteURL: string;
   carURL: string;
+  year: string;
   colors: TeamColors;
 }

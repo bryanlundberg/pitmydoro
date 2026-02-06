@@ -9,7 +9,6 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import NextImage from 'next/image';
 import { Team } from '@/interfaces/Teams.interface';
 import React, { useMemo, useState } from 'react';
 import { useSettings } from '@/hooks/useSettings';
@@ -18,6 +17,8 @@ import { useTranslations } from 'use-intl';
 import { SCUDERIAS } from '@/constants/Scuderias';
 import usePomodoroStore from '@/stores/Pomodoro.store';
 import _ from 'lodash';
+import tinycolor from 'tinycolor2';
+import { SpriteAnimation } from '@/components/SpriteAnimation';
 
 export const Scuderia = () => {
   const { changeScuderia } = useSettings();
@@ -42,7 +43,7 @@ export const Scuderia = () => {
 
   return (
     <Box>
-      <Text fontWeight={'bold'} fontSize={'lg'}>
+      <Text fontWeight={'bold'} fontSize={'lg'} marginBottom={3}>
         {t('scuderia')}
       </Text>
 
@@ -54,7 +55,7 @@ export const Scuderia = () => {
             size={'lg'}
             cursor={'pointer'}
             onClick={() => setSelectedYear(year)}
-            colorPalette='blue'
+            colorPalette={'white'}
             borderRadius={'full'}
           >
             {year}
@@ -69,7 +70,7 @@ export const Scuderia = () => {
           justify='center'
           maxW='lg'
           value={selectedScuderia}
-          onValueChange={(e) => handleScuderiaChange(e.value)}
+          onValueChange={(e) => handleScuderiaChange(e.value as string)}
           defaultValue={SCUDERIAS[0]?.id}
         >
           <VStack align='stretch'>
@@ -80,19 +81,27 @@ export const Scuderia = () => {
                   value={team.id}
                   borderRadius={'xl'}
                   borderWidth={'3px'}
-                  borderColor={{ base: 'gray.100', _dark: 'gray.700' }}
+                  background={'gray.100'}
                   boxShadow={'none'}
+                  borderColor={{ base: 'gray.100', _dark: 'gray.800' }}
+                  _dark={{ background: 'gray.900' }}
                   _hover={{
-                    bgColor: 'gray.100',
+                    opacity: 0.8,
+                    borderColor: 'gray.200',
                     _dark: {
-                      bgColor: 'gray.600',
+                      borderColor: 'gray.800',
                     },
                   }}
                   _checked={{
-                    borderWidth: '3px',
-                    borderColor: 'gray.300',
+                    backgroundColor: tinycolor(team.colors.background.session).darken(5).toString(),
+                    borderColor: tinycolor(team.colors.background.session).darken(10).toString(),
                     _dark: {
-                      borderColor: 'gray.400',
+                      backgroundColor: tinycolor(team.colors.background.session)
+                        .brighten(-90)
+                        .toString(),
+                      borderColor: tinycolor(team.colors.background.session)
+                        .brighten(-80)
+                        .toString(),
                     },
                   }}
                 >
@@ -104,6 +113,7 @@ export const Scuderia = () => {
                       paddingY={'10px'}
                       justifyContent={'space-between'}
                       alignItems='center'
+                      flexWrap={'wrap'}
                     >
                       <Box
                         display='flex'
@@ -126,8 +136,14 @@ export const Scuderia = () => {
                         <ColorPreview colors={team.colors} />
                       </Box>
 
-                      <Image asChild alt={'...'}>
-                        <NextImage width={200} height={100} src={team?.carURL || ''} alt='...' />
+                      <Image asChild alt={'team-car'}>
+                        <SpriteAnimation
+                          src={team?.spriteURL as string}
+                          frameHeight={68}
+                          frameWidth={210}
+                          totalFrames={6}
+                          paused={false}
+                        />
                       </Image>
                     </Flex>
                   </RadioCard.ItemControl>
